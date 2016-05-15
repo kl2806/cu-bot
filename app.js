@@ -34,6 +34,7 @@ function sendTextMessage(sender, text) {
   });
 }
 
+console.log(sendTextMessage)
 app.post('/webhook/', function (req, res) {
   console.log("hereeeee")
   messaging_events = req.body.entry[0].messaging;
