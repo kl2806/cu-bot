@@ -5,6 +5,7 @@ var server = http.createServer(app);
 
 app.get('/webhook', function (req, res) {
   if (req.query['hub.verify_token'] === 'verify') {
+    console.log("verified")
     res.send(req.query['hub.challenge']);
   }
   res.send('Error, wrong validation token');
@@ -44,6 +45,7 @@ app.post('/webhook/', function (req, res) {
   //     sendTextMessage(sender, "Text received, echo: "+ text.substring(0, 200));
   //   }
   // }
+  console.log("here")
   res.sendStatus(200);
 });
 
