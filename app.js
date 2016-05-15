@@ -5,8 +5,8 @@ var server = http.createServer(app);
 
 
 app.get('/webhook', function (req, res) {
+  console.log("here")
   if (req.query['hub.verify_token'] === 'verify') {
-        console.log("here")
     res.send(req.query['hub.challenge']);
   } else {
     res.send('Error, wrong validation token');
@@ -36,7 +36,7 @@ function sendTextMessage(sender, text) {
   });
 }
 
-app.post('/webhook', function (req, res) {
+app.post('/webhook/', function (req, res) {
   console.log("hereeeee")
   messaging_events = req.body.entry[0].messaging;
   for (i = 0; i < messaging_events.length; i++) {
