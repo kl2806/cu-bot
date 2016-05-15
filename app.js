@@ -3,12 +3,11 @@ var express = require('express');
 var app = express();
 var server = http.createServer(app);
 
-  console.log("here")
 app.get('/webhook', function (req, res) {
   if (req.query['hub.verify_token'] === 'verify') {
     res.send(req.query['hub.challenge']);
   }
-  res.send('Error, wrong validation token');he
+  res.send('Error, wrong validation token');
 });
 
 var token = "EAAYCWfiuiugBAEN7s2hWgUk5DbyeZCv56eu1R3CandniCwyuMk6jiVPMxx1ZAecaw0Qjwje5eCc0s0nZCLSXlWoJHxZCMag4pd4du2kEjrvGNhU8ab9hwncPufy5amzlIho9gDJtTnXGvwwZAAHorG3RzFRAhf7sWlklzerU2VQZDZD"
@@ -34,16 +33,14 @@ function sendTextMessage(sender, text) {
   });
 }
 
-console.log(sendTextMessage)
 app.post('/webhook/', function (req, res) {
-  console.log("hereeeee")
   messaging_events = req.body.entry[0].messaging;
   for (i = 0; i < messaging_events.length; i++) {
     event = req.body.entry[0].messaging[i];
     sender = event.sender.id;
     if (event.message && event.message.text) {
       text = event.message.text;
-      console.log(text);
+      // Handle a text message from this sender
       sendTextMessage(sender, "Text received, echo: "+ text.substring(0, 200));
     }
   }
@@ -51,6 +48,8 @@ app.post('/webhook/', function (req, res) {
 });
 
 var port = process.env.PORT || 3000;
+
+console.log(app.post)
 
 var listener = server.listen(port, function() {
   var host = server.address().address;
