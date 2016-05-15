@@ -7,8 +7,9 @@ var server = http.createServer(app);
 app.get('/webhook', function (req, res) {
   if (req.query['hub.verify_token'] === 'verify') {
     res.send(req.query['hub.challenge']);
+  } else {
+    res.send('Error, wrong validation token');
   }
-  res.send('Error, wrong validation token');
 });
 
 var token = "EAAYCWfiuiugBAEN7s2hWgUk5DbyeZCv56eu1R3CandniCwyuMk6jiVPMxx1ZAecaw0Qjwje5eCc0s0nZCLSXlWoJHxZCMag4pd4du2kEjrvGNhU8ab9hwncPufy5amzlIho9gDJtTnXGvwwZAAHorG3RzFRAhf7sWlklzerU2VQZDZD"
