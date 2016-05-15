@@ -11,6 +11,29 @@ app.get('/webhook', function (req, res) {
   res.send('Error, wrong validation token');
 });
 
+var token = "EAAYCWfiuiugBAEN7s2hWgUk5DbyeZCv56eu1R3CandniCwyuMk6jiVPMxx1ZAecaw0Qjwje5eCc0s0nZCLSXlWoJHxZCMag4pd4du2kEjrvGNhU8ab9hwncPufy5amzlIho9gDJtTnXGvwwZAAHorG3RzFRAhf7sWlklzerU2VQZDZD"
+
+function sendTextMessage(sender, text) {
+  messageData = {
+    text:text
+  }
+  request({
+    url: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: {access_token:token},
+    method: 'POST',
+    json: {
+      recipient: {id:sender},
+      message: messageData,
+    }
+  }, function(error, response, body) {
+    if (error) {
+      console.log('Error sending message: ', error);
+    } else if (response.body.error) {
+      console.log('Error: ', response.body.error);
+    }
+  });
+}
+
 app.get('/webhook', function (req, res) {
   messaging_events = req.body.entry[0].messaging;
   for (i = 0; i < messaging_events.length; i++) {
@@ -18,8 +41,7 @@ app.get('/webhook', function (req, res) {
     sender = event.sender.id;
     if (event.message && event.message.text) {
       text = event.message.text;
-      // Handle a text message from this sender
-      res.send(text);
+      sendTextMessage(sender, "Text received, echo: "+ text.substring(0, 200));
     }
   }
   res.sendStatus(200);
