@@ -3,6 +3,10 @@ var express = require('express');
 var app = express();
 var server = http.createServer(app);
 
+var bodyParser = require('body-parser')
+
+app.use(bodyParser.json())
+
 var token = "EAAYCWfiuiugBAEN7s2hWgUk5DbyeZCv56eu1R3CandniCwyuMk6jiVPMxx1ZAecaw0Qjwje5eCc0s0nZCLSXlWoJHxZCMag4pd4du2kEjrvGNhU8ab9hwncPufy5amzlIho9gDJtTnXGvwwZAAHorG3RzFRAhf7sWlklzerU2VQZDZD"
 
 app.get('/webhook', function (req, res) {
@@ -38,17 +42,18 @@ app.get('/webhook', function (req, res) {
 //   });
 // }
 
-app.post('/webhook', function (req, res) {
-  // messaging_events = req.body.entry[0].messaging;
-  // for (i = 0; i < messaging_events.length; i++) {
-  //   event = req.body.entry[0].messaging[i];
-  //   sender = event.sender.id;
-  //   if (event.message && event.message.text) {
-  //     text = event.message.text;
-  //     // Handle a text message from this sender
-  //     sendTextMessage(sender, "Text received, echo: "+ text.substring(0, 200));
-  //   }
-  // }
+app.post('/webhook/', function (req, res) {
+  messaging_events = req.body.entry[0].messaging;
+  for (i = 0; i < messaging_events.length; i++) {
+    event = req.body.entry[0].messaging[i];
+    sender = event.sender.id;
+    if (event.message && event.message.text) {
+      text = event.message.text;
+      // Handle a text message from this sender
+      //sendTextMessage(sender, "Text received, echo: "+ text.substring(0, 200));
+      console.log(text);
+    }
+  }
   console.log("Post")
   res.sendStatus(200);
 });
