@@ -6,7 +6,9 @@ var server = http.createServer(app);
 var bodyParser = require('body-parser');
 var request = require('request');
 
-app.use(bodyParser.json())
+JSONbig = require('json-bigint')
+//app.use(bodyParser.json())
+app.use(bodyParser.text({ type: 'application/json' }))
 
 var token = "EAAYCWfiuiugBAEN7s2hWgUk5DbyeZCv56eu1R3CandniCwyuMk6jiVPMxx1ZAecaw0Qjwje5eCc0s0nZCLSXlWoJHxZCMag4pd4du2kEjrvGNhU8ab9hwncPufy5amzlIho9gDJtTnXGvwwZAAHorG3RzFRAhf7sWlklzerU2VQZDZD"
 
@@ -40,9 +42,12 @@ function sendTextMessage(sender, text) {
 }
 
 app.post('/webhook/', function (req, res) {
-  messaging_events = req.body.entry[0].messaging;
+
+  var data = JSONbig.parse(req.body);
+  console.log(data)
+  messaging_events = data.entry[0].messaging;
   for (i = 0; i < messaging_events.length; i++) {
-    event = req.body.entry[0].messaging[i];
+    event = data.entry[0].messaging[i];
     sender = event.sender.id.toString();
     console.log(sender);
     console.log(typeof(sender));
