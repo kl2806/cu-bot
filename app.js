@@ -46,7 +46,8 @@ app.post('/webhook/', function (req, res) {
   var data = JSONbig.parse(req.body);
   console.log(data)
   messaging_events = data.entry[0].messaging;
-  sender = messaging_events.sender.id.toString();
+  sender = messaging_events[0].sender.id.toString();
+  console.log(sender)
 
   sendTextMessage(sender, 'hello world!');
 
