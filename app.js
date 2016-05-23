@@ -10,7 +10,7 @@ var JSONbig = require('json-bigint')
 //app.use(bodyParser.json())
 app.use(bodyParser.text({ type: 'application/json' }))
 
-var token = "EAAYCWfiuiugBAEN7s2hWgUk5DbyeZCv56eu1R3CandniCwyuMk6jiVPMxx1ZAecaw0Qjwje5eCc0s0nZCLSXlWoJHxZCMag4pd4du2kEjrvGNhU8ab9hwncPufy5amzlIho9gDJtTnXGvwwZAAHorG3RzFRAhf7sWlklzerU2VQZDZD"
+var token = "EAAYCWfiuiugBALqZCseZCAguZAfdkyP0CqEjiJZAcZA0YJYN6vBBg8y8Y9fQBi4txzCDn2dWBTmZASRgQOPbL87AQUbPk4m3vY7MMmactc4agVO9ZCW524yWbYTzJuLI99qzVZA1CfPFNjuhZCBae116xo1ISDZCrbWnY3GsCUl5DGAwZDZD"
 
 app.get('/webhook', function (req, res) {
   if (req.query['hub.verify_token'] === 'verify') {
@@ -50,23 +50,21 @@ app.post('/webhook/', function (req, res) {
   console.log(sender)
 
   sendTextMessage(sender, 'hello world!');
-
-
-  // for (i = 0; i < messaging_events.length; i++) {
-  //   event = data.entry[0].messaging[i];
-  //   sender = event.sender.id.toString();
-  //   console.log(sender);
-  //   console.log(typeof(sender));
-  //   if (event.message && event.message.text) {
-  //     text = event.message.text;
-  //     // Handle a text message from this sender
-  //     sendTextMessage(sender, "Text received, echo: "+ text.substring(0, 200));
-  //     console.log(text);
+  for (i = 0; i < messaging_events.length; i++) {
+    event = data.entry[0].messaging[i];
+    sender = event.sender.id.toString();
+    console.log(sender);
+    console.log(typeof(sender));
+    if (event.message && event.message.text) {
+      text = event.message.text;
+      // Handle a text message from this sender
+      sendTextMessage(sender, "Text received, echo: "+ text.substring(0, 200));
+      console.log(text);
 
 
 
-  //   }
-  // }
+    }
+  }
   console.log("Post")
   res.sendStatus(200);
 });
