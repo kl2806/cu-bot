@@ -44,28 +44,18 @@ function sendTextMessage(sender, text) {
 app.post('/webhook/', function (req, res) {
 
   var data = JSONbig.parse(req.body);
-  console.log(data)
   messaging_events = data.entry[0].messaging;
   sender = messaging_events[0].sender.id.toString();
-  console.log(sender)
-
-  sendTextMessage(sender, 'hello world!');
   for (i = 0; i < messaging_events.length; i++) {
     event = data.entry[0].messaging[i];
     sender = event.sender.id.toString();
-    console.log(sender);
-    console.log(typeof(sender));
     if (event.message && event.message.text) {
       text = event.message.text;
       // Handle a text message from this sender
       sendTextMessage(sender, "Text received, echo: "+ text.substring(0, 200));
       console.log(text);
-
-
-
     }
   }
-  console.log("Post")
   res.sendStatus(200);
 });
 
